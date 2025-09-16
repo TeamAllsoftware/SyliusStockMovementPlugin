@@ -1,21 +1,21 @@
 <?php
 
-
 namespace Aropixel\SyliusStockMovementPlugin\Repository;
 
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
-class StockMovementRepository extends ServiceEntityRepository implements StockMovementRepositoryInterface
+class StockMovementRepository extends EntityRepository implements StockMovementRepositoryInterface
 {
-
-    public function __construct(
-        ManagerRegistry $registry,
-        $stockMovementEntityClass
-    )
+    public function findByProductVariant(ProductVariantInterface $productVariant): array
     {
-        parent::__construct($registry, $stockMovementEntityClass);
+        return $this
+            ->createQueryBuilder('stockMovement')
+            ->andWhere('stockMovement.productVariant = :productVariant')
+            ->setParameter('productVariant', $productVariant)
+            ->orderBy('stockMovement.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
-
 }

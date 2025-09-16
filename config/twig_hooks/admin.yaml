@@ -1,0 +1,13 @@
+sylius_twig_hooks:
+    hooks:
+        # Product simple
+        'sylius_admin.product.update.content.form.sections.inventory':
+            stock_movement:
+                template: '@AropixelSyliusStockMovementPlugin/admin/stock_movement.html.twig'
+                priority: 50
+                
+        # Product variant
+        'sylius_admin.product_variant.update.content.form.sections.inventory.body':
+            stock_movement:
+                template: '@AropixelSyliusStockMovementPlugin/admin/stock_movement.html.twig'
+                priority: 50

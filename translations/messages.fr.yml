@@ -1,0 +1,12 @@
+aropixel_sylius_stock_movement:
+    ui:
+        stock_movement:
+            title: Historique des mouvements de stock
+            no_data: Aucun historique de mouvement de stock
+        date: Date
+        stock: Stock
+        movement: Mouvement
+        type: Type
+        origin: Origine
+        origin_manual: Manuel
+        origin_order: Commande

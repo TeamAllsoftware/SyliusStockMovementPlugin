@@ -1,0 +1,17 @@
+imports:
+    - { resource: "twig_hooks/*.yaml" }
+
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+            timestampable: true
+
+sylius_resource:
+    resources:
+        aropixel.stock_movement:
+            driver: doctrine/orm
+            classes:
+                model: Aropixel\SyliusStockMovementPlugin\Entity\StockMovement
+                interface: Aropixel\SyliusStockMovementPlugin\Entity\StockMovementInterface
+                repository: Aropixel\SyliusStockMovementPlugin\Repository\StockMovementRepository

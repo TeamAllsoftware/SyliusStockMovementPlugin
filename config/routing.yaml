@@ -1,0 +1,7 @@
+aropixel_sylius_stock_movement_plugin_admin:
+    resource: "@AropixelSyliusStockMovementPlugin/config/routes/admin.yaml"
+    prefix: '/%sylius_admin.path_name%'
+
+aropixel_sylius_stock_movement_plugin_shop:
+    resource: "@AropixelSyliusStockMovementPlugin/config/routes/shop.yaml"
+    prefix: /{_locale}

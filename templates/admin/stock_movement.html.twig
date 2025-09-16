@@ -1,0 +1,75 @@
+{% set productOrProductVariant = hookable_metadata.context.resource %}
+
+<div class="card g-col-12">
+    <div class="card-header">
+        <div class="card-title">
+            {{ 'aropixel_sylius_stock_movement.ui.stock_movement.title'|trans }}
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table id="sylius_admin_stock_movement_table" class="table card-table table-vcenter">
+                <thead>
+                <tr>
+                    <th id="sylius_admin_stock_movement_date">
+                        {{ 'aropixel_sylius_stock_movement.ui.date'|trans }}
+                    </th>
+                    <th id="sylius_admin_stock_movement_movement" class="w-1">
+                        {{ 'aropixel_sylius_stock_movement.ui.movement'|trans }}
+                    </th>
+                    <th id="sylius_admin_stock_movement_stock" class="w-1">
+                        {{ 'aropixel_sylius_stock_movement.ui.stock'|trans }}
+                    </th>
+                    <th id="sylius_admin_stock_movement_type" class="w-1">
+                        {{ 'aropixel_sylius_stock_movement.ui.type'|trans }}
+                    </th>
+                    <th id="sylius_admin_stock_movement_origin">
+                        {{ 'aropixel_sylius_stock_movement.ui.origin'|trans }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {# @var stockMovement \Aropixel\SyliusStockMovementPlugin\Entity\StockMovementInterface #}
+                {% for stockMovement in getStockMovements(productOrProductVariant) %}
+                    <tr>
+                        <td>
+                            {{ stockMovement.createdAt|format_datetime }}
+                        </td>
+                        <td>
+                            {{ '%+d'|format(stockMovement.movement) }}
+                        </td>
+                        <td>
+                            {% if stockMovement.movement > 0 %}
+                                <span class="text-success">
+                                    {{ ux_icon('tabler:arrow-up') }}
+                                </span>
+                            {% elseif stockMovement.movement < 0 %}
+                                <span class="text-danger">
+                                    {{ ux_icon('tabler:arrow-down') }}
+                                </span>
+                            {% endif %}
+                            {{ stockMovement.quantity }}
+                        </td>
+                        <td>
+                            {{ stockMovement.origin|trans }}
+                        </td>
+                        <td>
+                            {% if stockMovement.order %}
+                                <a href="{{ path('sylius_admin_order_show', {'id': stockMovement.order.id}) }}">
+                                    {{ stockMovement.order.number }}
+                                </a>
+                            {% else %}
+                                {{ stockMovement.adminUser }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9999">{{ 'aropixel_sylius_stock_movement.ui.stock_movement.no_data'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

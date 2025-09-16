@@ -10,5 +10,8 @@ interface StockMovementFactoryInterface
 {
     public function createManualStockMovement(ProductVariantInterface $productVariant): StockMovementInterface;
 
-    public function createOrderStockMovement(ProductVariantInterface $productVariant, OrderInterface $order): StockMovementInterface;
+    public function createOrderStockMovement(
+        ProductVariantInterface $productVariant,
+        OrderInterface $order,
+    ): StockMovementInterface;
 }

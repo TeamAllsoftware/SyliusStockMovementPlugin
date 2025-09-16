@@ -1,49 +1,33 @@
 <?php
 
-
 namespace Aropixel\SyliusStockMovementPlugin\Inventory\Operator;
 
 use Aropixel\SyliusStockMovementPlugin\Persister\StockMovementPersisterInterface;
-use Sylius\Component\Core\Inventory\Operator\OrderInventoryOperatorInterface;
+use Sylius\Component\Core\Inventory\Operator\OrderInventoryOperatorInterface as DecoratedOrderInventoryOperatorInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 
-class OrderInventoryOperator implements OrderInventoryOperatorInterface
+readonly class OrderInventoryOperator implements OrderInventoryOperatorInterface
 {
-    /** @var OrderInventoryOperatorInterface */
-    private $decoratedOperator;
-    /**
-     * @var StockMovementPersisterInterface
-     */
-    private $stockMovementPersister;
-
-
     public function __construct(
-        OrderInventoryOperatorInterface $decoratedOperator,
-        StockMovementPersisterInterface $stockMovementPersister
+        private DecoratedOrderInventoryOperatorInterface $decoratedOrderInventoryOperator,
+        private StockMovementPersisterInterface $stockMovementPersister,
     ) {
-        $this->decoratedOperator = $decoratedOperator;
-        $this->stockMovementPersister = $stockMovementPersister;
     }
-
 
     public function cancel(OrderInterface $order): void
     {
-        $this->decoratedOperator->cancel($order);
+        $this->decoratedOrderInventoryOperator->cancel($order);
         $this->stockMovementPersister->persistOrderStockMovements($order);
     }
-
 
     public function hold(OrderInterface $order): void
     {
-        $this->decoratedOperator->hold($order);
+        $this->decoratedOrderInventoryOperator->hold($order);
     }
-
 
     public function sell(OrderInterface $order): void
     {
-        $this->decoratedOperator->sell($order);
+        $this->decoratedOrderInventoryOperator->sell($order);
         $this->stockMovementPersister->persistOrderStockMovements($order);
     }
-
-
 }

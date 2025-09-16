@@ -1,16 +1,15 @@
 <?php
 
-
 namespace Aropixel\SyliusStockMovementPlugin\Entity;
 
 trait ProductVariantMovementTrait
 {
+    /** @var ?int */
+    private $oldOnHand = null;
 
-    private $oldOnHand;
+    /** @var int */
+    protected $onHand = 0;
 
-    /**
-     * @return mixed
-     */
     public function getOldOnHand(): ?int
     {
         return $this->oldOnHand;
@@ -19,22 +18,20 @@ trait ProductVariantMovementTrait
     public function setOnHand(?int $onHand): void
     {
         $this->oldOnHand = $this->onHand;
-        $this->onHand = (0 > (int)$onHand) ? 0 : (int)$onHand;
+        parent::setOnHand($onHand);
     }
 
     public function getStockMovement(): int
     {
-        return $this->getOnHand() - $this->getOldOnHand();
+        return $this->onHand - $this->oldOnHand;
     }
 
     public function isStockUpdated(): bool
     {
-        if (!is_null($this->getOldOnHand())) {
+        if (!is_null($this->oldOnHand)) {
             return true;
         }
 
         return false;
     }
-
-
 }

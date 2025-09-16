@@ -4,166 +4,109 @@
 namespace Aropixel\SyliusStockMovementPlugin\Entity;
 
 
-use Sylius\Component\Core\Model\UserInterface;
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-class StockMovement  implements ResourceInterface, StockMovementInterface
+class StockMovement implements ResourceInterface, StockMovementInterface
 {
-    public const ORIGIN_MANUAL = "manual";
-    public const ORIGIN_ORDER = "order";
+    /** @var ?int */
+    private $id = null;
 
-    /** @var int */
-    private $id;
+    /** @var ?\DateTimeInterface */
+    private $createdAt = null;
 
-    /** @var \DateTime */
-    private $createdAt;
+    /** @var ?int */
+    private $quantity = null;
 
-    /** @var int */
-    private $quantity;
+    /** @var ?int */
+    private $movement = null;
 
-    /** @var int */
-    private $movement;
-
-    /** @var string */
-    private $origin;
+    /** @var ?StockMovementOriginEnum */
+    private $origin = null;
 
     /** @var ?OrderInterface */
-    private $order;
+    private $order = null;
 
-    /** @var ?\Symfony\Component\Security\Core\User\UserInterface */
-    private $adminUser;
+    /** @var ?AdminUserInterface */
+    private $adminUser = null;
 
-    /** @var ProductVariantInterface */
-    private $productVariant;
+    /** @var ?ProductVariantInterface */
+    private $productVariant = null;
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return int
-     */
-    public function getQuantity(): int
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    /**
-     * @param int $quantity
-     */
-    public function setQuantity(int $quantity): void
+    public function setQuantity(?int $quantity): void
     {
         $this->quantity = $quantity;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrigin(): string
+    public function getMovement(): ?int
+    {
+        return $this->movement;
+    }
+
+    public function setMovement(?int $movement): void
+    {
+        $this->movement = $movement;
+    }
+
+    public function getOrigin(): ?StockMovementOriginEnum
     {
         return $this->origin;
     }
 
-    /**
-     * @param string $origin
-     */
-    public function setOrigin(string $origin): void
+    public function setOrigin(?StockMovementOriginEnum $origin): void
     {
         $this->origin = $origin;
     }
 
-    /**
-     * @return OrderInterface|null
-     */
     public function getOrder(): ?OrderInterface
     {
         return $this->order;
     }
 
-    /**
-     * @param OrderInterface|null $order
-     */
     public function setOrder(?OrderInterface $order): void
     {
         $this->order = $order;
     }
 
-    /**
-     * @return \Symfony\Component\Security\Core\User\UserInterface|null
-     */
-    public function getAdminUser(): ?\Symfony\Component\Security\Core\User\UserInterface
+    public function getAdminUser(): ?AdminUserInterface
     {
         return $this->adminUser;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface|null $adminUser
-     */
-    public function setAdminUser(?\Symfony\Component\Security\Core\User\UserInterface $adminUser): void
+    public function setAdminUser(?AdminUserInterface $adminUser): void
     {
         $this->adminUser = $adminUser;
     }
 
-    /**
-     * @return ProductVariantInterface
-     */
-    public function getProductVariant(): ProductVariantInterface
+    public function getProductVariant(): ?ProductVariantInterface
     {
         return $this->productVariant;
     }
 
-    /**
-     * @param ProductVariantInterface $productVariant
-     */
-    public function setProductVariant(ProductVariantInterface $productVariant): void
+    public function setProductVariant(?ProductVariantInterface $productVariant): void
     {
         $this->productVariant = $productVariant;
     }
-
-    /**
-     * @return int
-     */
-    public function getMovement(): int
-    {
-        return $this->movement;
-    }
-
-    /**
-     * @param int $movement
-     */
-    public function setMovement(int $movement): void
-    {
-        $this->movement = $movement;
-    }
-
 }

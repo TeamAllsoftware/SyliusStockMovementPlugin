@@ -11,17 +11,40 @@ and displayed in the admin product stock tab. The origin of the stock update is 
 
 ## Installation
 
-- Install this plugin using composer : 
+##### *We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.*
 
 ```bash
 composer require aropixel/sylius-stock-movement-plugin
 ```
 
-- import the plugin config in a new "aropixel_sylius_stock_movement.yaml" file inside 'config/packages':
+##### Add plugin dependencies to your `config/bundles.php` file:
+
+```php
+return [
+    ...
+    Aropixel\SyliusStockMovementPlugin\AropixelSyliusStockMovementPlugin::class => ['all' => true],
+];
+```
+
+##### Import required config in your `config/packages/_sylius.yaml` file:
+```yaml
+# config/packages/_sylius.yaml
+
+imports:
+    ...
+
+    - { resource: "@AropixelSyliusStockMovementPlugin/config/config.yaml" }
+```
+
+##### Import routing in your `config/routes.yaml` file:
 
 ```yaml
-imports:
-    - { resource: "@AropixelSyliusStockMovementPlugin/Resources/config/app/config.yml" }
+
+# config/routes.yaml
+...
+
+aropixel_sylius_stock_movement_plugin:
+    resource: "@AropixelSyliusStockMovementPlugin/config/routing.yaml"
 ```
 
 - Add the StockMovement interface and trait to your ProductVariant entity: 

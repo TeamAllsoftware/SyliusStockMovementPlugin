@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+>
+    <mapped-superclass name="Aropixel\SyliusStockMovementPlugin\Entity\StockMovement" table="aropixel_stock_movement">
+        <indexes>
+            <index name="variant_idx" columns="product_variant_id,created_at"/>
+        </indexes>
+
+        <id name="id" column="id" type="integer">
+            <generator/>
+        </id>
+
+        <field name="quantity" column="quantity" type="integer"/>
+
+        <field name="movement" column="movement" type="integer"/>
+
+        <field name="origin" column="origin" enum-type="Aropixel\SyliusStockMovementPlugin\Entity\StockMovementOriginEnum"/>
+
+        <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface">
+            <join-column name="order_id"/>
+        </many-to-one>
+
+        <many-to-one field="adminUser" target-entity="Sylius\Component\Core\Model\AdminUserInterface">
+            <join-column name="admin_user_id"/>
+        </many-to-one>
+
+        <many-to-one field="productVariant" target-entity="Sylius\Component\Core\Model\ProductVariantInterface">
+            <join-column name="product_variant_id"/>
+        </many-to-one>
+
+        <field name="createdAt" type="datetime" column="created_at">
+            <gedmo:timestampable on="create"/>
+        </field>
+    </mapped-superclass>
+</doctrine-mapping>
