@@ -19,8 +19,9 @@ readonly class ProductListener
         /** @var ProductInterface $product */
         $product = $event->getSubject();
         Assert::isInstanceOf($product, ProductInterface::class);
-        Assert::true($product->isSimple());
 
-        $this->stockMovementPersister->persistManualStockMovement($product->getVariants()->first());
+        if ($product->isSimple()) {
+            $this->stockMovementPersister->persistManualStockMovement($product->getVariants()->first());
+        }
     }
 }
